@@ -22,6 +22,8 @@ return new class extends Migration
             // $table->boolean('loan_status')->default(false);
             $table->string('profile_image')->nullable();
             $table->string('password');
+            /* Users: 0=>Admin, 1=>User*/
+            $table->unsignedTinyInteger('role')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
