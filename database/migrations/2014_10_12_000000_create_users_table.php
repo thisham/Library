@@ -18,9 +18,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->char('gender', 1); // M or F
             $table->string('address');
-            $table->string('phone', 20);
+            $table->string('phone_number', 20);
             // $table->boolean('loan_status')->default(false);
-            $table->string('image')->nullable();
+            $table->string('profile_image')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
