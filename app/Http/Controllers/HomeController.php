@@ -26,8 +26,9 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function admin()
+    public function admin(Request $request)
     {
-        return view('admin.dashboard');
+        $assets = ['chart', 'animation'];
+        return view('admin.dashboard', compact('assets'));
     }
 }

@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id();           
+            $table->id();
             $table->string('title');
             $table->string('publisher');
             $table->year('published_year');
             $table->string('ISBN', 17)->nullable()->unique();
-            $table->text('description');
-            $table->unsignedSmallInteger('pages');     
+            $table->text('language'); // Indonesia, English, Arab
+            $table->unsignedSmallInteger('pages');
             $table->string('cover_image')->nullable();
             $table->timestamps();
             // author foreign key and pivot table
