@@ -39,7 +39,17 @@ class CategoryService
         if ($validator->fails()) {
             return ['error' => $validator->errors()];
         }
-        $product = $this->categoryRepository->store($data);
+
+        DB::beginTransaction();
+        try {
+            $product = $this->categoryRepository->store($data);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+
+            throw new InvalidArgumentException('Unable to create data');
+        }
+        DB::commit();
 
         return $product;
     }
@@ -61,7 +71,7 @@ class CategoryService
             DB::rollBack();
             Log::info($e->getMessage());
 
-            throw new InvalidArgumentException('Unable to update post data');
+            throw new InvalidArgumentException('Unable to update data');
         }
         DB::commit();
 
@@ -76,7 +86,7 @@ class CategoryService
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
-            throw new InvalidArgumentException('Unable to delete category book data');
+            throw new InvalidArgumentException('Unable to delete data');
         }
         DB::commit();
 
