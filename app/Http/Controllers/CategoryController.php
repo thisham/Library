@@ -12,12 +12,12 @@ use Illuminate\View\View;
 class CategoryController extends Controller
 {
     protected $categoryService;
-    protected $dataTableService;
+    protected $categoryDataTableService;
 
-    public function __construct(CategoryService $categoryService, CategoryDataTableService $dataTableService)
+    public function __construct(CategoryService $categoryService, CategoryDataTableService $categoryDataTableService)
     {
         $this->categoryService = $categoryService;
-        $this->dataTableService = $dataTableService;
+        $this->categoryDataTableService = $categoryDataTableService;
     }
 
     public function index()
@@ -26,11 +26,10 @@ class CategoryController extends Controller
             $assets = ['data-table'];
             $pageTitle = 'Book Category Data';
             $headerAction = '<a href="' . route('admin.category.create') . '" class="btn btn-sm btn-primary" role="button">Add Category</a>';
-            return $this->dataTableService->render('admin.category.index', compact('assets', 'pageTitle', 'headerAction'));
+            return $this->categoryDataTableService->render('admin.category.index', compact('assets', 'pageTitle', 'headerAction'));
         } catch (Exception $e) {
             $error = $e->getMessage();
-            // return view('error', compact('error'));
-            return response()->json($error);
+            return back()->withErrors($error);
         }
     }
 

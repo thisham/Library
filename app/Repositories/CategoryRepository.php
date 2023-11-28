@@ -27,7 +27,6 @@ class CategoryRepository
     public function store($data): Category
     {
         $category = new $this->category;
-
         $category->name = $data['name'];
 
         $category->save();
