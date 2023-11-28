@@ -44,7 +44,7 @@
 
         <ul class="sub-nav collapse" id="sidebar-books" data-bs-parent="#sidebar">
             <li class="nav-item">
-                <a class="nav-link @activeRoute('admin.book')" href="{{route('admin.book')}}">
+                <a class="nav-link @activeRoute('admin.book.index')" href="{{route('admin.book.index')}}">
                   <i class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                             <g>
@@ -57,7 +57,7 @@
                 </a>
             </li>         
             <li class="nav-item">        
-                 <a class="nav-link @activeRoute('admin.category')" href="{{route('admin.category')}}">
+                 <a class="nav-link @activeRoute('admin.category.index')" href="{{route('admin.category.index')}}">
                   <i class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                             <g>
@@ -71,7 +71,7 @@
             </li>       
 
             <li class="nav-item">        
-                 <a class="nav-link @activeRoute('admin.author')" href="{{route('admin.author')}}">
+                 <a class="nav-link @activeRoute('admin.author.index')" href="{{route('admin.author.index')}}">
                   <i class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                             <g>

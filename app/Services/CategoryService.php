@@ -30,7 +30,7 @@ class CategoryService
         return $this->categoryRepository->getById($id);
     }
 
-    public function store($data): Category
+    public function store($data)
     {
         $validator = Validator::make($data, [
             'name' => 'required|max:255',
@@ -42,7 +42,7 @@ class CategoryService
 
         DB::beginTransaction();
         try {
-            $product = $this->categoryRepository->store($data);
+            $category = $this->categoryRepository->store($data);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
@@ -51,10 +51,10 @@ class CategoryService
         }
         DB::commit();
 
-        return $product;
+        return $category;
     }
 
-    public function update($data, $id): Category
+    public function update($data, $id)
     {
         $validator = Validator::make($data, [
             'name' => 'required|max:255',
@@ -66,7 +66,7 @@ class CategoryService
 
         DB::beginTransaction();
         try {
-            $product = $this->categoryRepository->update($data, $id);
+            $category = $this->categoryRepository->update($data, $id);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
@@ -75,21 +75,23 @@ class CategoryService
         }
         DB::commit();
 
-        return $product;
+        return $category;
     }
 
-    public function destroy($id): Category
+    public function destroy($id): string
     {
         DB::beginTransaction();
         try {
-            $product = $this->categoryRepository->destroy($id);
+            $this->categoryRepository->destroy($id);
+            $status = 'success';
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
-            throw new InvalidArgumentException('Unable to delete data');
+            $status = 'errors';
+            // throw new InvalidArgumentException('Unable to delete data');
         }
         DB::commit();
 
-        return $product;
+        return $status;
     }
 }
