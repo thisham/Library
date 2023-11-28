@@ -24,6 +24,7 @@
         "fslightbox": "^3.3.0-2",
         "jquery": "^3.6.0",
         "nouislider": "^14.7.0",
+        "select2": "^4.1.0-rc.0",
         "smooth-scrollbar": "^8.7.4",
         "sweetalert2": "^10.0.2",
         "swiper": "^6.5.7",
