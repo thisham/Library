@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,15 @@ Route::middleware(['auth', 'user-access:admin'])->prefix('admin')->group(functio
         Route::get('edit/{id}', 'edit')->name('admin.book.edit');
         Route::put('edit/{id}', 'update')->name('admin.book.update');
         Route::delete('destroy/{id}', 'destroy')->name('admin.book.destroy');
+    });
+
+    Route::controller(UserController::class)->prefix('user')->group(function () {
+        Route::get('', 'index')->name('admin.user.index');
+        Route::get('add', 'create')->name('admin.user.create');
+        Route::post('add', 'store')->name('admin.user.store');
+        Route::get('edit/{id}', 'edit')->name('admin.user.edit');
+        Route::put('edit/{id}', 'update')->name('admin.user.update');
+        Route::delete('destroy/{id}', 'destroy')->name('admin.user.destroy');
     });
 });
 
