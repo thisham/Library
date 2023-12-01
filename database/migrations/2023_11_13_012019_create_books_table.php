@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('publisher');
             $table->year('published_year');
-            $table->string('ISBN', 17)->nullable()->unique();
+            $table->string('isbn', 17)->nullable()->unique();
             $table->text('language'); // Indonesia, English, Arab
             $table->unsignedSmallInteger('pages');
             $table->string('cover_image')->nullable();

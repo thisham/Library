@@ -76,8 +76,9 @@ class CategoryController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        $status = $this->categoryService->destroy($id);
-        $message = __('global-message.delete_form', ['form' => 'Category data']);
+        $result = $this->categoryService->destroy($id);
+        $status = $result['status'];
+        $message = $result['message'];
 
         if (request()->ajax()) {
             return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);

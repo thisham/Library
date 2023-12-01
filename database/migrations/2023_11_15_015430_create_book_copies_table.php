@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('book_copies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('books_id')->constrained();
+            $table->foreignId('book_id')->constrained();
             $table->boolean('is_available')->default(true);
             $table->timestamps();
         });

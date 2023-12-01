@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Select2Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,11 @@ Route::middleware(['auth', 'user-access:admin'])->prefix('admin')->group(functio
         Route::get('edit/{id}', 'edit')->name('admin.book.edit');
         Route::put('edit/{id}', 'update')->name('admin.book.update');
         Route::delete('destroy/{id}', 'destroy')->name('admin.book.destroy');
+    });
+
+    Route::prefix('select2')->group(function () {
+        Route::post('authors', [Select2Controller::class, 'getAuthors'])->name('admin.get.authors');
+        Route::post('categories', [Select2Controller::class, 'getCategories'])->name('admin.get.categories');
     });
 });
 

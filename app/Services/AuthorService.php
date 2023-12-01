@@ -33,7 +33,7 @@ class AuthorService
     public function store($data)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -78,19 +78,21 @@ class AuthorService
         return $author;
     }
 
-    public function destroy($id): string
+    public function destroy($id)
     {
         DB::beginTransaction();
         try {
             $this->authorRepository->destroy($id);
             $status = 'success';
+            $message = __('global-message.delete_form', ['form' => 'Author data']);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
             $status = 'errors';
+            $message = $e->getMessage();
         }
         DB::commit();
 
-        return $status;
+        return ['status' => $status, 'message' => $message];
     }
 }

@@ -76,8 +76,9 @@ class AuthorController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        $status = $this->authorService->destroy($id);
-        $message = __('global-message.delete_form', ['form' => 'Author data']);
+        $result = $this->authorService->destroy($id);
+        $status = $result['status'];
+        $message = $result['message'];
 
         if (request()->ajax()) {
             return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);

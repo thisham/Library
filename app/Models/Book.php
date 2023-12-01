@@ -40,6 +40,6 @@ class Book extends Model
 
     public function copies(): HasMany
     {
-        return $this->hasMany(BookCopy::class, 'books_id');
+        return $this->hasMany(BookCopy::class, 'book_id');
     }
 }

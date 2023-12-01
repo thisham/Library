@@ -57,7 +57,7 @@ class CategoryService
     public function update($data, $id)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -78,20 +78,21 @@ class CategoryService
         return $category;
     }
 
-    public function destroy($id): string
+    public function destroy($id)
     {
         DB::beginTransaction();
         try {
             $this->categoryRepository->destroy($id);
             $status = 'success';
+            $message = __('global-message.delete_form', ['form' => 'Category data']);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
             $status = 'errors';
-            // throw new InvalidArgumentException('Unable to delete data');
+            $message = $e->getMessage();
         }
         DB::commit();
 
-        return $status;
+        return ['status' => $status, 'message' => $message];
     }
 }

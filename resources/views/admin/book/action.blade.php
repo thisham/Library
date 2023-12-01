@@ -1,6 +1,6 @@
 <div class="flex align-items-center">
-    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Edit Category"
-        href="{{ route('admin.category.edit', $id) }}">
+    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip" title="Edit Book"
+        href="{{ route('admin.book.edit', $id) }}">
         <span class="btn-inner">
             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -16,11 +16,11 @@
     </a>
 
     <?php
-    $message = __('global-message.delete_alert', ['form' => __('category')]);
+    $message = __('global-message.delete_alert', ['form' => __('book')]);
     ?>
     <a class="btn btn-sm btn-icon btn-danger"
         onclick="if (confirm('{{ $message }}')) document.getElementById('delete-form-{{ $id }}').submit(); return false"
-        data-bs-toggle="tooltip" title="Delete Category" href="#">
+        data-bs-toggle="tooltip" title="Delete Book" href="#">
         <span class="btn-inner">
             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                 stroke="currentColor">
@@ -35,7 +35,7 @@
             </svg>
         </span>
     </a>
-    <form action="{{ route('admin.category.destroy', $id) }}" id="delete-form-{{ $id }}" method="post">
+    <form action="{{ route('admin.book.destroy', $id) }}" id="delete-form-{{ $id }}" method="post">
         @method('delete')
         @csrf()
     </form>

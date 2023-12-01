@@ -19,7 +19,7 @@
     $message = __('global-message.delete_alert', ['form' => __('author')]);
     ?>
     <a class="btn btn-sm btn-icon btn-danger"
-        onclick="return confirm('{{ $message }}') ? document.forms['{{ $id }}'].submit() : false"
+        onclick="if (confirm('{{ $message }}')) document.getElementById('delete-form-{{ $id }}').submit(); return false"
         data-bs-toggle="tooltip" title="Delete Author" href="#">
         <span class="btn-inner">
             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
             </svg>
         </span>
     </a>
-    <form action="{{ route('admin.author.destroy', $id) }}" id="{{ $id }}" method="post">
+    <form action="{{ route('admin.author.destroy', $id) }}" id="delete-form-{{ $id }}" method="post">
         @method('delete')
         @csrf()
     </form>
