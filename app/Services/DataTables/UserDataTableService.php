@@ -21,7 +21,7 @@ class UserDataTableService extends DataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->addColumn('action', 'admin.category.action')
+            ->addColumn('action', 'admin.user.action')
             ->rawColumns(['action']);
     }
 
