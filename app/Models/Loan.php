@@ -16,6 +16,8 @@ class Loan extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'book_copy_id',
+        'user_id',
         'loan_date',
         'return_date',
         'status'
@@ -23,7 +25,7 @@ class Loan extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function bookCopy(): BelongsTo

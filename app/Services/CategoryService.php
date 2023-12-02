@@ -33,7 +33,7 @@ class CategoryService
     public function store($data)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {

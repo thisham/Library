@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Author;
-use App\Repositories\AuthorRepository;
+use App\Models\Loan;
+use App\Repositories\LoanRepository;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -11,29 +11,33 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 
-class AuthorService
+class LoanService
 {
-    protected $authorRepository;
+    protected $LoanRepository;
 
-    public function __construct(AuthorRepository $authorRepository)
+    public function __construct(LoanRepository $LoanRepository)
     {
-        $this->authorRepository = $authorRepository;
+        $this->LoanRepository = $LoanRepository;
     }
 
     public function getAll(): Collection
     {
-        return $this->authorRepository->getAll();
+        return $this->LoanRepository->getAll();
     }
 
-    public function getById($id): Author
+    public function getById($id): Loan
     {
-        return $this->authorRepository->getById($id);
+        return $this->LoanRepository->getById($id);
     }
 
     public function store($data)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'book_copy_id' => 'required|exists:book_copies,id',
+            'user_id' => 'required|exists:users,id',
+            'loan_date' => 'required|date',
+            'return_date' => 'required|date',
+            'status' => 'required|in:pending,approved,rejected,returned',
         ]);
 
         if ($validator->fails()) {
@@ -42,7 +46,7 @@ class AuthorService
 
         DB::beginTransaction();
         try {
-            $author = $this->authorRepository->store($data);
+            $loan = $this->LoanRepository->store($data);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
@@ -51,13 +55,17 @@ class AuthorService
         }
         DB::commit();
 
-        return $author;
+        return $loan;
     }
 
     public function update($data, $id)
     {
         $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'book_copy_id' => 'required|exists:book_copies,id',
+            'user_id' => 'required|exists:users,id',
+            'loan_date' => 'required|date',
+            'return_date' => 'required|date',
+            'status' => 'required|in:pending,approved,rejected,returned',
         ]);
 
         if ($validator->fails()) {
@@ -66,7 +74,7 @@ class AuthorService
 
         DB::beginTransaction();
         try {
-            $author = $this->authorRepository->update($data, $id);
+            $loan = $this->LoanRepository->update($data, $id);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
@@ -75,16 +83,16 @@ class AuthorService
         }
         DB::commit();
 
-        return $author;
+        return $loan;
     }
 
     public function destroy($id)
     {
         DB::beginTransaction();
         try {
-            $this->authorRepository->destroy($id);
+            $this->LoanRepository->destroy($id);
             $status = 'success';
-            $message = __('global-message.delete_form', ['form' => 'Author data']);
+            $message = __('global-message.delete_form', ['form' => 'Loan data']);
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
