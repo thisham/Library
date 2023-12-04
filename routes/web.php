@@ -71,6 +71,8 @@ Route::middleware(['auth', 'user-access:admin'])->prefix('admin')->group(functio
     Route::prefix('select2')->group(function () {
         Route::post('authors', [Select2Controller::class, 'getAuthors'])->name('admin.get.authors');
         Route::post('categories', [Select2Controller::class, 'getCategories'])->name('admin.get.categories');
+        Route::post('books', [Select2Controller::class, 'getBooks'])->name('admin.get.books');
+        Route::post('users', [Select2Controller::class, 'getUsers'])->name('admin.get.users');
     });
 });
 

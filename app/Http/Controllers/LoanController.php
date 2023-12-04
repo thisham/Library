@@ -35,7 +35,8 @@ class LoanController extends Controller
 
     public function create(): View
     {
-        return view('admin.loan.form');
+        $assets = ['select2'];
+        return view('admin.loan.form', compact('assets'));
     }
 
     public function store(Request $request): RedirectResponse

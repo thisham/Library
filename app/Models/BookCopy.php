@@ -20,7 +20,7 @@ class BookCopy extends Model
         'is_available'
     ];
 
-    public function book(): BelongsTo
+    public function books(): BelongsTo
     {
         return $this->belongsTo(Book::class, 'book_id');
     }

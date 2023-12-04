@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">{{ $id !== null ? 'Update' : 'New' }} Book</h4>
+                            <h4 class="card-title">{{ $id !== null ? 'Update' : 'New' }} Loan</h4>
                         </div>
                         <div class="card-action">
                             <a href="{{ route('admin.loan.index') }}" class="btn btn-sm btn-primary"
@@ -30,7 +30,7 @@
                         <div class="new-user-info">
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label class="form-label" for="book_copy_id">Book <span
+                                    <label class="form-label" for="book_copy_id">Book<span
                                             class="text-danger">*</span></label>
                                     {!! Form::select(
                                         'book_copy_id',
@@ -52,7 +52,7 @@
                                 </div>
 
                                 <div class="form-group col-md-12">
-                                    <label class="form-label" for="user_id">User <span
+                                    <label class="form-label" for="user_id">User<span
                                             class="text-danger">*</span></label>
                                     {!! Form::select(
                                         'user_id',
@@ -73,10 +73,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-5">
                                     <label class="form-label" for="loan_date">Book Loan Date<span
                                             class="text-danger">*</span></label>
-                                    {!! Form::date('loan_date', old('loan_date'), [
+                                    {!! Form::date('loan_date', $id ? date('Y-m-d', strtotime(old('loan_date', $data->loan_date))) : date('Y-m-d'), [
                                         'id' => 'loan_date',
                                         'class' => 'form-control' . ($errors->has('loan_date') ? ' is-invalid' : ''),
                                         'placeholder' => 'Loan Date',
@@ -91,10 +91,47 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group col-md-5">
+                                    <label class="form-label" for="return_date">Book Return Date</label>
+                                    {!! Form::date('return_date', $id ? date('Y-m-d', strtotime(old('loan_date', $data->return_date))) : '', [
+                                        'id' => 'return_date',
+                                        'class' => 'form-control' . ($errors->has('return_date') ? ' is-invalid' : ''),
+                                        'placeholder' => 'Return Date',
+                                        'autofocus',
+                                    ]) !!}
 
+                                    @error('return_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label class="form-label" for="status">Loan Status<span
+                                            class="text-danger">*</span></label>
+                                    {!! Form::select(
+                                        'status',
+                                        ['0' => 'Pending', '1' => 'Approved and Loaned', '2' => 'Exceed Limit Day', '3' => 'Rejected', '4' => 'Returned'],
+                                        old('status'),
+                                        [
+                                            'id' => 'status',
+                                            'class' => 'form-control' . ($errors->has('status') ? ' is-invalid' : ''),
+                                            'placeholder' => 'Status',
+                                            'autofocus',
+                                            'required',
+                                        ],
+                                    ) !!}
+
+                                    @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">{{ $id !== null ? 'Update' : 'Add' }}
-                                Book</button>
+                                Loan</button>
                         </div>
                     </div>
                 </div>
@@ -127,7 +164,28 @@
 <script type="text/javascript">
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $(document).ready(function() {
-        $(".users").select2({
+        $(".book").select2({
+            placeholder: "Select a book",
+            ajax: {
+                url: "{{ route('admin.get.books') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        _token: CSRF_TOKEN,
+                        search: params.term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        $(".user").select2({
             placeholder: "Select a user",
             ajax: {
                 url: "{{ route('admin.get.users') }}",
